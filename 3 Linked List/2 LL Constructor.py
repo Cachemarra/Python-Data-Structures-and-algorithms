@@ -50,21 +50,60 @@ class LinkedList:
         # Create new node and insert node in index
         new_node = Node(value)
 
-        # Grab first node and iterate through index
-        temp_node = self.head
-        for _ in range(index - 1):
-            temp_node = temp_node.next
+        if index == 1:
+            _ = self.prepend(value)
+        elif index == self.length:
+            _ = self.append(value)
 
-        prev_next = temp_node.next
-        temp_node.next = new_node
-        new_node.next = prev_next
+        else:
+            # Grab first node and iterate through index
+            temp_node = self.head
+            for _ in range(index - 1):
+                temp_node = temp_node.next
 
-        self._update_length(1)
+                prev_next = temp_node.next
+                temp_node.next = new_node
+                new_node.next = prev_next
+
+                self._update_length(1)
         return True
 
-    def pop(self, index=None):
-        pass
+    def pop(self):
+        # Starting point
+        temp_node = self.head
 
+        # Check edge cases
+        if self.length <= 1:
+            if temp_node == None:
+                return False
+            else:
+                pop_val = self.head.value
+                self.head = None
+
+        else:
+            for _ in range(self.length - 2):
+                temp_node = temp_node.next
+            
+            pop_val = temp_node.next.value
+            temp_node.next = None
+            self.tail = temp_node
+        
+        self._update_length(-1)
+        return pop_val
+
+        # if index == 0:
+        #     self.head = temp_node.next
+        # elif temp_node == None:
+        #     return False
+        # else:
+        #     # Iterate until arrives to the prior node
+        #     for _ in range(index - 1):
+        #         temp_node = temp_node.next
+        #     # Skip the middle node, so it will disapear.
+        #     temp_node = temp_node.next.next 
+
+        # self._update_length(-1)
+        # return True
 
     def _update_length(self, value):
         self.length += value
@@ -93,5 +132,6 @@ linked.prepend(11)
 print(linked)
 linked.insert(3, 7)
 print(linked)
-
+print(f"Poped Value: {linked.pop()}")
+print(linked)
 
