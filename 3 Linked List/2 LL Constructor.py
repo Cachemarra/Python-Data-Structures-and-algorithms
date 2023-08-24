@@ -9,12 +9,16 @@ class Node:
 
 # %% Creation of a class for Linked List
 class LinkedList:
-    def __init__(self, value) -> None:
+
+    DECREACE_LEN = -1
+    INCREASE_LEN = 1
+
+    def __init__(self, value=None) -> None:
         # Create a new node
         new_node = Node(value)
         self.head = new_node
         self.tail = new_node
-        self.length = 1
+        self.length = 1 if value != None else 0
 
 
     def append(self, value):
@@ -31,7 +35,7 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
 
-        self._update_length(1)
+        self._update_length(self.INCREASE_LEN)
         return True
 
     def prepend(self, value):
@@ -42,7 +46,10 @@ class LinkedList:
         self.head = new_node
         self.head.next = old_head
 
-        self._update_length(1)
+        if self.length <= 1:
+            self.tail = new_node
+
+        self._update_length(self.INCREASE_LEN)
         return True
 
 
@@ -65,45 +72,69 @@ class LinkedList:
                 temp_node.next = new_node
                 new_node.next = prev_next
 
-                self._update_length(1)
+                self._update_length(self.INCREASE_LEN)
         return True
 
     def pop(self):
-        # Starting point
-        temp_node = self.head
-
-        # Check edge cases
-        if self.length <= 1:
-            if temp_node == None:
-                return False
-            else:
-                pop_val = self.head.value
-                self.head = None
-
-        else:
-            for _ in range(self.length - 2):
-                temp_node = temp_node.next
-            
-            pop_val = temp_node.next.value
-            temp_node.next = None
-            self.tail = temp_node
+        # Opt version
+        if self.length == 0:
+            return None
         
-        self._update_length(-1)
-        return pop_val
+        temp = self.head
+        pre = self.head
 
-        # if index == 0:
-        #     self.head = temp_node.next
-        # elif temp_node == None:
-        #     return False
+        while(temp.next):
+            pre = temp
+            temp = temp.next
+
+        self.tail = pre
+        self.tail.next = None
+        
+        self._update_length(self.DECREACE_LEN)
+
+        if self.length == 0:
+            self.head = None
+            self.tail = None
+
+        return self.tail.value
+
+        # # Starting point
+        # temp_node = self.head
+
+        # # Check edge cases
+        # if self.length <= 1:
+        #     if temp_node == None:
+        #         return False
+        #     else:
+        #         pop_val = self.head.value
+        #         self.head = None
+
         # else:
-        #     # Iterate until arrives to the prior node
-        #     for _ in range(index - 1):
+        #     for _ in range(self.length - 2):
         #         temp_node = temp_node.next
-        #     # Skip the middle node, so it will disapear.
-        #     temp_node = temp_node.next.next 
-
+            
+        #     pop_val = temp_node.next.value
+        #     temp_node.next = None
+        #     self.tail = temp_node
         # self._update_length(-1)
-        # return True
+        # return pop_val
+
+
+    def pop_first(self):
+        if self.length == 0:
+            return False
+        elif self.length == 1:
+            pop_val = self.head
+            self.head = None
+            self.tail = None
+        
+        else:
+            pop_val = self.head
+            self.head = self.head.next
+
+        self._update_length(self.DECREACE_LEN)
+        return pop_val.value
+
 
     def _update_length(self, value):
         self.length += value
@@ -135,3 +166,5 @@ print(linked)
 print(f"Poped Value: {linked.pop()}")
 print(linked)
 
+print(f"Pop first: {linked.pop_first()}")
+print(linked)
