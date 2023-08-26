@@ -52,8 +52,10 @@ class LinkedList:
         return True
 
     def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return False
+        
         # Create new node and insert node in index
-        new_node = Node(value)
 
         if index == 1:
             _ = self.prepend(value)
@@ -61,16 +63,23 @@ class LinkedList:
             _ = self.append(value)
 
         else:
-            # Grab first node and iterate through index
-            temp_node = self.head
-            for _ in range(index - 1):
-                temp_node = temp_node.next
+            prev_node = self.get(index-1)
+            follow_node = self.get(index+1)
 
-                prev_next = temp_node.next
-                temp_node.next = new_node
-                new_node.next = prev_next
+            node = Node(value)
+            prev_node.next = node
+            node.next = follow_node
 
-                self._update_length(self.INCREASE_LEN)
+            # # Grab first node and iterate through index
+            # temp_node = self.head
+            # for _ in range(index - 1):
+            #     temp_node = temp_node.next
+
+            #     prev_next = temp_node.next
+            #     temp_node.next = new_node
+            #     new_node.next = prev_next
+
+            self._update_length(self.INCREASE_LEN)
         return True
 
     def pop(self):
@@ -181,10 +190,13 @@ class LinkedList:
 
 linked = LinkedList(3)
 print(linked)
+print("Append")
 linked.append(23)
 print(linked)
+print("Prepend")
 linked.prepend(11)
 print(linked)
+print("Insert")
 linked.insert(3, 7)
 print(linked)
 
