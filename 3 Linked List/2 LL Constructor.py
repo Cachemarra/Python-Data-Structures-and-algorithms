@@ -94,7 +94,7 @@ class LinkedList:
             self.head = None
             self.tail = None
 
-        return temp.value
+        return temp
 
         # # Starting point
         # temp_node = self.head
@@ -127,25 +127,42 @@ class LinkedList:
         self.head = self.head.next
 
         self._update_length(self.DECREACE_LEN)
-        return pop_val.value
+        return pop_val
 
     def get(self, index):
-        pass
+        if index < 0 or index > self.length:
+            return None
+        
+        temp = self.head
 
-    def set(self, index):
-        pass
+        for _ in range(index):
+            temp = temp.next
+
+        return temp
+
+    def set(self, index, value):
+        tmp = self.get(index)
+        tmp.value = value
+        return True
 
     def remove(self, index):
-        pass
+        prev_node = self.get(index - 1)
 
-    def reverse(self, index):
-        pass
+        deleted_node = prev_node.next
+        prev_node.next = deleted_node.next
 
+        return True
 
+    def reverse(self):
+        reverse = LinkedList(self.tail.value)
+
+        for i in range(self.length - 2, - 1, -1):
+            reverse.append(self.get(i).value)
+
+        return reverse
 
     def _update_length(self, value):
         self.length += value
-
 
     def __str__(self):
         # Print the elements of the list
@@ -170,9 +187,19 @@ linked.prepend(11)
 print(linked)
 linked.insert(3, 7)
 print(linked)
-print(f"Poped last: {linked.pop()}")
+
+# print(linked.reverse())
+print(linked.get(2).value)
+print(linked.set(2, 32))
+print(f"Modified linked list: {linked}")
+reversed = linked.reverse()
+print(f"Reversed liked list: {reversed}")
+print(f"Poped last: {linked.pop().value}")
+print(linked)
+print(f"Removed"); linked.remove(1)
 print(linked)
 
-print(f"Pop first: {linked.pop_first()}")
+print(f"Pop first: {linked.pop_first().value}")
 print(linked)
 
+# %%
