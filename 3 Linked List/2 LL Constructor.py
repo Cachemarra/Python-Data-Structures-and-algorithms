@@ -56,30 +56,29 @@ class LinkedList:
             return False
         
         # Create new node and insert node in index
-
-        if index == 1:
-            _ = self.prepend(value)
+        if index == 0:
+            return self.prepend(value)
         elif index == self.length:
-            _ = self.append(value)
+            return self.append(value)
 
-        else:
-            prev_node = self.get(index-1)
-            follow_node = self.get(index+1)
+        # Insert elsewhere
+        prev_node = self.get(index-1)
+        node = Node(value)
 
-            node = Node(value)
-            prev_node.next = node
-            node.next = follow_node
+        node.next = prev_node.next
+        prev_node.next = node
+        
 
-            # # Grab first node and iterate through index
-            # temp_node = self.head
-            # for _ in range(index - 1):
-            #     temp_node = temp_node.next
+        # # Grab first node and iterate through index
+        # temp_node = self.head
+        # for _ in range(index - 1):
+        #     temp_node = temp_node.next
 
-            #     prev_next = temp_node.next
-            #     temp_node.next = new_node
-            #     new_node.next = prev_next
+        #     prev_next = temp_node.next
+        #     temp_node.next = new_node
+        #     new_node.next = prev_next
 
-            self._update_length(self.INCREASE_LEN)
+        self._update_length(self.INCREASE_LEN)
         return True
 
     def pop(self):
@@ -155,12 +154,20 @@ class LinkedList:
         return True
 
     def remove(self, index):
+        if index < 0 or index >= self.length:
+            return None
+        elif index == 0:
+            return self.pop_first()
+        elif index == self.length - 1:
+            return self.pop()
+        
         prev_node = self.get(index - 1)
-
         deleted_node = prev_node.next
         prev_node.next = deleted_node.next
+        deleted_node.next = None
+        self._update_length(self.DECREACE_LEN)
 
-        return True
+        return deleted_node
 
     def reverse(self):
         reverse = LinkedList(self.tail.value)
@@ -197,7 +204,7 @@ print("Prepend")
 linked.prepend(11)
 print(linked)
 print("Insert")
-linked.insert(3, 7)
+linked.insert(1, 7)
 print(linked)
 
 # print(linked.reverse())
