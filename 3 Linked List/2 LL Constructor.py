@@ -3,8 +3,6 @@ class Node:
     def __init__(self, value) -> None:
         self.value = value
         self.next = None
-        pass
-
 
 
 # %% Creation of a class for Linked List
@@ -170,12 +168,27 @@ class LinkedList:
         return deleted_node
 
     def reverse(self):
-        reverse = LinkedList(self.tail.value)
+        # Course solution
+        #    Change tail and head positions
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+        after = temp.next
+        before = None
 
-        for i in range(self.length - 2, - 1, -1):
-            reverse.append(self.get(i).value)
+        for _ in range(self.length):
+            after = temp.next
+            temp.next = before
+            before = temp
+            temp = after
 
-        return reverse
+        # Mine solution
+        # reverse = LinkedList(self.tail.value)
+
+        # for i in range(self.length - 2, - 1, -1):
+        #     reverse.append(self.get(i).value)
+
+        # return reverse
 
     def _update_length(self, value):
         self.length += value
@@ -188,7 +201,7 @@ class LinkedList:
         while temp is not None:
             text += f" {temp.value} ->"
             temp = temp.next
-
+        text += f"{temp.value}"
         return text + f"\nLen: {self.length}"
 
 
