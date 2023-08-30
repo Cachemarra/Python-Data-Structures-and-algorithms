@@ -43,7 +43,7 @@ class LinkedList:
         self.head = new_node
         self.head.next = old_head
 
-        if self.length <= 1:
+        if self.length <= 0:
             self.tail = new_node
 
         self._update_length(self.INCREASE_LEN)
@@ -153,7 +153,7 @@ class LinkedList:
 
     def remove(self, index):
         if index < 0 or index >= self.length:
-            return None
+            return False
         elif index == 0:
             return self.pop_first()
         elif index == self.length - 1:
@@ -190,6 +190,42 @@ class LinkedList:
 
         # return reverse
 
+    def find_middle_node(self):
+        slow = self.head
+        fast = self.head.next
+        
+        if slow == None or slow.next == None:
+            return slow
+        
+        while fast != None or fast.next != None:
+            fast = fast.next
+            slow = slow.next
+            
+            if None == fast or None == fast.next:
+                break
+            fast = fast.next
+                 
+        return slow
+
+
+    def has_loop(self):
+        slow = self.head
+        fast = self.head.next
+        
+        while slow != None or fast != None:
+            fast = fast.next
+            slow = slow.next
+            
+            if fast == None or fast.next == None:
+                break
+            if fast == slow:
+                return True
+            
+            fast = fast.next
+            
+        return False
+    
+
     def _update_length(self, value):
         self.length += value
 
@@ -201,7 +237,7 @@ class LinkedList:
         while temp is not None:
             text += f" {temp.value} ->"
             temp = temp.next
-        text += f"{temp.value}"
+        text += f" None"
         return text + f"\nLen: {self.length}"
 
 
@@ -224,6 +260,10 @@ print(linked)
 print(linked.get(2).value)
 print(linked.set(2, 32))
 print(f"Modified linked list: {linked}")
+
+
+print(f"Middle Node: {linked.find_middle_node().value}")
+
 reversed = linked.reverse()
 print(f"Reversed liked list: {reversed}")
 print(f"Poped last: {linked.pop().value}")
@@ -233,5 +273,5 @@ print(linked)
 
 print(f"Pop first: {linked.pop_first().value}")
 print(linked)
-
+print(f"Middle Node: {linked.find_middle_node().value}")
 # %%
