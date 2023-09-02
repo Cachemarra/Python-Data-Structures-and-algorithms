@@ -23,7 +23,7 @@ class LinkedList:
         new_node = Node(value)
 
         # Check if we don't have empty LL
-        if self.head is None:
+        if self.length == 0: # self.head is None:
             self.head = new_node
             self.tail = new_node
         
@@ -190,6 +190,8 @@ class LinkedList:
 
         # return reverse
 
+# Interview Question.
+
     def find_middle_node(self):
         slow = self.head
         fast = self.head.next
@@ -224,7 +226,9 @@ class LinkedList:
             fast = fast.next
             
         return False
-    
+
+
+# END OF Interview Question. =============
 
     def _update_length(self, value):
         self.length += value
@@ -241,13 +245,85 @@ class LinkedList:
         return text + f"\nLen: {self.length}"
 
 
+    def partition_list(self, x):
+        if self.length == 0:
+            return None
+        elif self.length == 1:
+            return self.head
+        
+        # Creation of two LL
+        equalGreat = LinkedList(None)
+        less = LinkedList(None)
+
+        temp = self.head
+        while temp != None:
+            if temp.value >= x:
+                equalGreat.append(temp.value)
+            else:
+                less.append(temp.value)
+
+            temp = temp.next
+            
+
+        self.head = less.head
+        temp = self.head
+        lessNext = less.head
+        while lessNext.next != None:
+            temp.next = lessNext.next
+            temp = temp.next
+            lessNext = lessNext.next
+            
+        # Merge LinkedList
+        tempGreat = equalGreat.head
+
+        while tempGreat != None:
+            if tempGreat.value == None: break
+            temp.next = tempGreat
+            temp = temp.next
+            tempGreat = tempGreat.next
+        
+        return less
+
+
+
+# %% Functions Interview Questions
+    
+def find_kth_from_end(linkedList, k):
+    if k <= 0:
+        return None
+    elif k == 1:
+        temp = linkedList.tail
+        temp.next = None
+        return temp
+    
+    # Main algorithm
+    slow = linkedList.head
+    fast = linkedList.head
+
+    for _ in range(k - 1):
+        fast = fast.next
+
+        if fast is None:
+            return None
+
+    while( fast.next is not None ):
+        slow = slow.next
+        fast = fast.next
+    
+    slow.next = None
+    return slow
+        
+
 # %% Tests
 # Linked List will be 11 -> 3 -> 23 -> 7
 
 linked = LinkedList(3)
+print(" Additions ".center(30, "-"))
 print(linked)
-print("Append")
+print("Append 3")
 linked.append(23)
+linked.append(5)
+linked.append(4)
 print(linked)
 print("Prepend")
 linked.prepend(11)
@@ -256,16 +332,22 @@ print("Insert")
 linked.insert(1, 7)
 print(linked)
 
-# print(linked.reverse())
+print(" Get & Set ".center(30, "-"))
 print(linked.get(2).value)
 print(linked.set(2, 32))
 print(f"Modified linked list: {linked}")
 
+print(" Functions ".center(30, "-"))
+partitionList = linked.partition_list(12)
+print(f"Partition list by value: {partitionList}")
 
+node = find_kth_from_end(linkedList=linked, k=5)
+print(f"Find kth node from end: {node.value}")
 print(f"Middle Node: {linked.find_middle_node().value}")
-
 reversed = linked.reverse()
 print(f"Reversed liked list: {reversed}")
+
+print(" Functions ".center(30, "-"))
 print(f"Poped last: {linked.pop().value}")
 print(linked)
 print(f"Removed"); linked.remove(1)
@@ -274,4 +356,38 @@ print(linked)
 print(f"Pop first: {linked.pop_first().value}")
 print(linked)
 print(f"Middle Node: {linked.find_middle_node().value}")
+
+# %% 1 - 10 linked list
+linked = LinkedList(1)
+print(" 1 - 9 Linked List ".center(30, "-"))
+print("Linked List")
+for i in range(8):
+    linked.append(i + 2)
+
+linked.reverse()
+print(linked)
+
+
+partitionList = linked.partition_list(12)
+
+for val in range(1, 11, 1):
+    partitionList.partition_list(val)
+    print(f"Partition list by value {val}: {partitionList}")
+    partitionList = linked
+
+# %%
+
+ll = LinkedList(3)
+ll.append(5)
+ll.append(8)
+ll.append(10)
+ll.append(2)
+ll.append(1)
+
+print("LL before partition_list:")
+print(ll) # Output: 3 5 8 10 2 1
+
+ll.partition_list(5)
+print("LL after partition_list:")
+print(ll) # Output: 3 2 1 5 8 10
 # %%

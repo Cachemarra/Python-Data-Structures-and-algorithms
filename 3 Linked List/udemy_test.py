@@ -1,4 +1,3 @@
-# %%
 class Node:
     def __init__(self, value):
         self.value = value
@@ -8,56 +7,110 @@ class LinkedList:
     def __init__(self, value):
         new_node = Node(value)
         self.head = new_node
-        self.tail = new_node
         self.length = 1
 
     def append(self, value):
         new_node = Node(value)
         if self.length == 0:
             self.head = new_node
-            self.tail = new_node
         else:
-            self.tail.next = new_node
-            self.tail = new_node
-        self.length += 1
-        return True
-
-    # WRITE HAS_LOOP METHOD HERE #
-    #                            #
-    #                            #
-    #                            #
-    #                            #
-    ##############################
-    def has_loop(self):
-        slow = self.head
-        fast = self.head.next
+            current_node = self.head
+            while current_node.next is not None:
+                current_node = current_node.next
+            current_node.next = new_node
+        self.length += 1 
+    
+    def print_list(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.value)
+            temp = temp.next    
+            
+    def make_empty(self):
+        self.head = None
+        self.tail = None
+        self.length = 0
         
-        while slow != None or fast != None:
-            fast = fast.next
-            slow = slow.next
-            
-            if fast == None:
-                break
-            elif fast == slow:
-                return True
-            
-            fast = fast.next
-            
-        return False
+    # WRITE PARTITION_LIST METHOD HERE #
+    #                                  #
+    #                                  #
+    #                                  #
+    #                                  #
+    ####################################
     
+    def partition_list(self, x):
+        if self.length == 0:
+            return None
+        elif self.length == 1:
+            return self.head
+        
+        # Creation of two LL
+        equalGreat = LinkedList(None)
+        less = LinkedList(None)
+
+        temp = self.head
+        while temp != None:
+            if temp.value >= x:
+                equalGreat.append(temp.value)
+            else:
+                less.append(temp.value)
+            temp = temp.next
+
+        self.make_empty()
+        
+        self.head = less.head
+        temp = self.head
+        lessNext = less.head
+        
+        while lessNext.next != None:
+            temp.next = lessNext.next
+            temp = temp.next
+            lessNext = lessNext.next
+            
+        # Merge LinkedList
+        tempGreat = equalGreat.head
+
+        while tempGreat != None:
+            if tempGreat.value == None: break
+            temp.next = tempGreat
+            temp = temp.next
+            tempGreat = tempGreat.next
+        
+        return less
     
-# %%
-my_linked_list_1 = LinkedList(1)
-my_linked_list_1.append(2)
-my_linked_list_1.append(3)
-my_linked_list_1.append(4)
-my_linked_list_1.tail.next = my_linked_list_1.head
-print(my_linked_list_1.has_loop() ) # Returns True
 
-my_linked_list_2 = LinkedList(1)
-my_linked_list_2.append(2)
-my_linked_list_2.append(3)
-my_linked_list_2.append(4)
-print(my_linked_list_2.has_loop() ) # Returns False
+ll = LinkedList(3)
+ll.append(5)
+ll.append(8)
+ll.append(10)
+ll.append(2)
+ll.append(1)
+
+print("LL before partition_list:")
+ll.print_list() # Output: 3 5 8 10 2 1
+
+ll.partition_list(5)
+
+print("LL after partition_list:")
+ll.print_list() # Output: 3 2 1 5 8 10
 
 
+"""
+    EXPECTED OUTPUT:
+    ----------------
+    LL before partition_list:
+    3
+    5
+    8
+    10
+    2
+    1
+    LL after partition_list:
+    3
+    2
+    1
+    5
+    8
+    10
+    
+"""
