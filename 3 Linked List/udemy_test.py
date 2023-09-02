@@ -1,3 +1,4 @@
+# %%
 class Node:
     def __init__(self, value):
         self.value = value
@@ -8,109 +9,97 @@ class LinkedList:
         new_node = Node(value)
         self.head = new_node
         self.length = 1
+        
+    def print_list(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.value)
+            temp = temp.next  
+            
+    def print_all(self):
+        if self.length == 0:
+            print("Head: None")
+        else:
+            print("Head: ", self.head.value)
+        print("Length: ", self.length)
+        print("\nLinked List:")
+        if self.length == 0:
+            print("empty")
+        else:
+            self.print_list()
 
     def append(self, value):
         new_node = Node(value)
         if self.length == 0:
             self.head = new_node
         else:
-            current_node = self.head
-            while current_node.next is not None:
-                current_node = current_node.next
-            current_node.next = new_node
-        self.length += 1 
-    
-    def print_list(self):
-        temp = self.head
-        while temp is not None:
-            print(temp.value)
-            temp = temp.next    
-            
-    def make_empty(self):
-        self.head = None
-        self.tail = None
-        self.length = 0
-        
-    # WRITE PARTITION_LIST METHOD HERE #
-    #                                  #
-    #                                  #
-    #                                  #
-    #                                  #
-    ####################################
-    
-    def partition_list(self, x):
+            current = self.head
+            while current.next is not None:
+                current = current.next
+            current.next = new_node
+        self.length += 1
+
+
+    # WRITE REMOVE_DUPLICATES METHOD HERE #
+    #                                     #
+    #                                     #
+    #                                     #
+    #                                     #
+    #######################################
+    def remove_duplicates(self):
         if self.length == 0:
             return None
-        elif self.length == 1:
-            return self.head
         
-        # Creation of two LL
-        equalGreat = LinkedList(None)
-        less = LinkedList(None)
-
+        # Extract all node values
         temp = self.head
+        node_values = []
         while temp != None:
-            if temp.value >= x:
-                equalGreat.append(temp.value)
-            else:
-                less.append(temp.value)
+            node_values.append(temp.value)
             temp = temp.next
-
-        self.make_empty()
         
-        self.head = less.head
+        node_values = set(node_values)
+        node_values.remove(self.head.value)
         temp = self.head
-        lessNext = less.head
-        
-        while lessNext.next != None:
-            temp.next = lessNext.next
-            temp = temp.next
-            lessNext = lessNext.next
-            
-        # Merge LinkedList
-        tempGreat = equalGreat.head
+        next_temp = self.head.next
 
-        while tempGreat != None:
-            if tempGreat.value == None: break
-            temp.next = tempGreat
-            temp = temp.next
-            tempGreat = tempGreat.next
-        
-        return less
-    
+        while next_temp != None:
+            if next_temp.value in node_values:
+                node_values.remove(next_temp.value)
 
-ll = LinkedList(3)
-ll.append(5)
-ll.append(8)
-ll.append(10)
-ll.append(2)
-ll.append(1)
+                temp.next = next_temp
+                temp = temp.next
 
-print("LL before partition_list:")
-ll.print_list() # Output: 3 5 8 10 2 1
+            next_temp = next_temp.next
+                
 
-ll.partition_list(5)
 
-print("LL after partition_list:")
-ll.print_list() # Output: 3 2 1 5 8 10
+
+# %%
+my_linked_list = LinkedList(1)
+my_linked_list.append(1)
+my_linked_list.append(2)
+my_linked_list.append(3)
+my_linked_list.append(3)
+my_linked_list.append(2)
+my_linked_list.append(4)
+my_linked_list.remove_duplicates()
+
+my_linked_list.print_all()
+
+
 
 
 """
     EXPECTED OUTPUT:
     ----------------
-    LL before partition_list:
-    3
-    5
-    8
-    10
-    2
+    Head:  1
+    Length:  4
+    Linked List:
     1
-    LL after partition_list:
-    3
     2
-    1
-    5
-    8
-    10
+    3
+    4
     
 """
+
+# %%
