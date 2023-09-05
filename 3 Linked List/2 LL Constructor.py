@@ -226,7 +226,31 @@ class LinkedList:
             fast = fast.next
             
         return False
+    
+    def remove_duplicates(self):
+        if self.length == 0:
+            return None
+        
+        # Extract all node values
+        temp = self.head
+        node_values = []
+        while temp != None:
+            node_values.append(temp.value)
+            temp = temp.next
+        
+        node_values = set(node_values)
+        node_values.remove(self.head.value)
+        temp = self.head
+        next_temp = self.head.next
 
+        while next_temp != None:
+            if next_temp.value in node_values:
+                node_values.remove(next_temp.value)
+
+                temp.next = next_temp
+                temp = temp.next
+
+            next_temp = next_temp.next
 
 # END OF Interview Question. =============
 
