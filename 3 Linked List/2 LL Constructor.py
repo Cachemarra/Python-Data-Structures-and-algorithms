@@ -182,7 +182,7 @@ class LinkedList:
             before = temp
             temp = after
 
-        # Mine solution
+        # My solution
         # reverse = LinkedList(self.tail.value)
 
         # for i in range(self.length - 2, - 1, -1):
@@ -251,6 +251,27 @@ class LinkedList:
                 temp = temp.next
 
             next_temp = next_temp.next
+
+
+    def reverse_between(self, m, n):
+        if self.length <= 1:
+            return 
+        
+        dummy = Node(0)
+        dummy.next = self.head
+        prev = dummy
+
+        for _ in range(m):
+            prev = prev.next
+
+        current = prev.next
+        for _ in range(n-m):
+            temp = current.next
+            current.next = temp.next
+            temp.next = prev.next
+            prev.next = temp
+
+        self.head = dummy.next
 
 # END OF Interview Question. =============
 
