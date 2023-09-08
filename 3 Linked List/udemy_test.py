@@ -40,27 +40,25 @@ class LinkedList:
     #####################################
     def reverse_between(self, m, n):
         temp = self.head
-        sub_node = self.head
 
-        if temp == None or m == 0 or n == 0:
+        if temp == None or n == 0 or self.length == 0:
             return None
         
-        for i in range(m):
-            sub_node = sub_node.next
-            temp = temp.next
-        wait = sub_node
+        prev = Node(0)
+        prev.next = self.head
 
-        i = 1
-        while new != None and i != n:
-            new = sub_node.next
-            temp = new
-            temp.next = sub_node
-            sub_node = sub_node.next
-            i += 1
+        for _ in range(m):
+            prev = prev.next
+
+        current = prev.next
+        temp = current
+        for _ in range(n - m):
+            temp = current.next
+            current.next = temp.next
+            temp.next = prev.next
+            prev.next = temp
+
         
-        temp.next = wait
-        temp = temp.next
-        temp.next = None
         
 
 # %% 
