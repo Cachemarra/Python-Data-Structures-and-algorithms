@@ -309,6 +309,25 @@ class LinkedList:
         return less
 
 
+    def binary_to_decimal(self):
+        bin_to_dec = lambda x: 2**x
+        temp = self.head
+
+        if temp == None:
+            return None
+
+        i = 1
+        value = 0
+
+        while temp != None:
+            if temp.value == 1:
+                value += bin_to_dec(self.length - i)
+            
+            i += 1
+            temp = temp.next
+
+        return value
+
 
 # %% Functions Interview Questions
     
