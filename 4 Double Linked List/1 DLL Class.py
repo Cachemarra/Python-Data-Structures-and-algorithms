@@ -1,6 +1,6 @@
 # %% Node class
 class Node:
-    def __init__(self, value):
+    def __init__(self, value:float):
         self.value = value
         self.prev = None
         self.next = None
@@ -10,14 +10,14 @@ class DoubleLinkedList:
     DECREACE_LEN = -1
     INCREASE_LEN = 1
     
-    def __init__(self, value = None):
+    def __init__(self, value:float = None):
         new_node = Node(value)
         self.head = new_node
         self.tail = new_node
         self.length = 1 if value != None else 0
 
 
-    def append(self, value):
+    def append(self, value:float):
         # Add a node to the end
         new_node = Node(value)
 
@@ -36,7 +36,7 @@ class DoubleLinkedList:
         self.__update_len(self.INCREASE_LEN)
         return True
 
-    def prepend(self, value):
+    def prepend(self, value:float):
         new_node = Node(value)
 
         temp = self.head
@@ -51,7 +51,7 @@ class DoubleLinkedList:
         return True
         
 
-    def insert(self, index, value):
+    def insert(self, index:int, value:float):
         pass
 
 
@@ -86,7 +86,7 @@ class DoubleLinkedList:
         return temp
 
     
-    def get(self, index):
+    def get(self, index:int):
         if index > self.length or index < 0:
             return False
         
@@ -98,7 +98,21 @@ class DoubleLinkedList:
         
 
     def set(self, index, value):
-        pass
+        # Normal method
+        # if index > self.length or index < 0:
+        #     return False
+        
+        # temp = self.head
+        # for _ in range(index):
+        #     temp = temp.next
+
+        # temp.value = value
+
+        # Lazy mode
+        temp = self.get(index)
+        temp.value = value
+        return True
+
 
 
     def remove(self, index):
