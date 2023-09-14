@@ -50,8 +50,7 @@ class DoubleLinkedList:
         self.head = new_node
         return True
         
-
-    def insert(self, index:int, value:float):
+    def insert_manual(self, index:int, value:float):
         if index < 0 or index > self.length:
             return False
         
@@ -79,7 +78,28 @@ class DoubleLinkedList:
         
         return True
 
+    def insert(self, index:int, value:float):
+        if index < 0 or index > self.length:
+            return False
+        
+        if index == 0:
+            self.prepend(value)
+        elif index == self.length:
+            self.append(value)
+        else:
+            node = Node(value)
+            
+            temp = self.get(index-1)
+            follow_node = temp.next
+            
+            temp.next = node
+            node.prev = temp
 
+            follow_node.prev = node
+            node.next = follow_node
+
+        return True
+    
     def pop(self):
         if self.length == 0:
             return None
@@ -96,7 +116,6 @@ class DoubleLinkedList:
         self.__update_len(self.DECREACE_LEN)
         return temp
 
-
     def pop_first(self):
         if self.length == 0:
             return None
@@ -109,7 +128,6 @@ class DoubleLinkedList:
         temp.prev = None
         self.__update_len(self.DECREACE_LEN)
         return temp
-
     
     def get(self, index:int):
         if index > self.length or index < 0:
@@ -121,7 +139,6 @@ class DoubleLinkedList:
 
         return temp
         
-
     def set(self, index, value):
         # Normal method
         # if index > self.length or index < 0:
