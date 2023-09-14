@@ -52,7 +52,32 @@ class DoubleLinkedList:
         
 
     def insert(self, index:int, value:float):
-        pass
+        if index < 0 or index > self.length:
+            return False
+        
+        node = Node(value)
+        temp = self.head
+
+        if index == 0:
+            node.next = temp
+            temp.prev = node
+        
+        elif index == self.length:
+            temp = self.tail
+            temp.next = node
+            node.prev = temp
+            
+        else:
+            for _ in range(index - 1):
+                temp = temp.next
+
+            follow_node = temp.next
+            temp.next = node
+            node.prev = temp
+            node.next = follow_node
+            follow_node.prev = node
+        
+        return True
 
 
     def pop(self):
