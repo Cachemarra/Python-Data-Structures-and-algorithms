@@ -25,7 +25,6 @@ class DoubleLinkedList:
             self.head = new_node
             self.tail = new_node
         else:
-
             temp = self.tail
 
             temp.next = new_node
@@ -48,6 +47,8 @@ class DoubleLinkedList:
             temp.prev = new_node
 
         self.head = new_node
+
+        self.__update_len(self.INCREASE_LEN)
         return True
         
     def insert_manual(self, index:int, value:float):
@@ -76,6 +77,7 @@ class DoubleLinkedList:
             node.next = follow_node
             follow_node.prev = node
         
+        self.__update_len(self.INCREASE_LEN)
         return True
 
     def insert(self, index:int, value:float):
@@ -98,6 +100,7 @@ class DoubleLinkedList:
             follow_node.prev = node
             node.next = follow_node
 
+        self.__update_len(self.INCREASE_LEN)
         return True
     
     def pop(self):
@@ -107,12 +110,18 @@ class DoubleLinkedList:
         # Storing actual tail
         temp = self.tail
 
-        # Update tail
-        new_tail = temp.prev
-        new_tail.next = None
-        self.tail = new_tail
+        if self.length == 1:
+            self.head = None
+            self.tail = None
 
-        temp.prev = None
+        else:
+            # Update tail
+            new_tail = temp.prev
+            new_tail.next = None
+            self.tail = new_tail
+
+            temp.prev = None
+        
         self.__update_len(self.DECREACE_LEN)
         return temp
 
@@ -155,19 +164,31 @@ class DoubleLinkedList:
         temp.value = value
         return True
 
-
-
     def remove(self, index):
-        pass
+        if index < 0 or index > self.length:
+            return False
+        
+        if index == 0:
+            self.pop_first()
+            return True
+        elif index == self.length:
+            self.pop()
+            return True
+        
+        temp = self.head
+        for _ in range(index - 1):
+            temp = temp.next
+        
+        temp.next = temp.next.next
+        temp = temp.next
+        temp.prev = temp.prev.prev
 
+        self.__update_len(self.DECREACE_LEN)
+        return True
 
     def reverse(self):
+        
         pass
-
-
-
-
-
 
     # Dunder methods ========
     def __str__(self):
@@ -195,7 +216,63 @@ if __name__ == "__main__":
     dLL.append(3)
     dLL.append(5)
     dLL.append(4)
+    dLL.append(3)
+    dLL.append(2)
 
+    print("Append")
+    print(dLL)
+
+    # Check prepend
+    print("\nPrepend")
+    dLL.prepend(1)
+    dLL.prepend(9)
+    dLL.prepend(11)
+    print(dLL)
+
+    # Check pop
+    print("\nPop")
+    dLL.pop()
+    dLL.pop()
+    print(dLL)
+
+    # Check pop_first
+    print("\nPop first")
+    dLL.pop_first()
+    dLL.pop_first()
+    print(dLL)
+
+    # Check get
+    print("\nGet")
+    node = dLL.get(0)
+    print(f"Value of node 0: {node.value}")
+    node = dLL.get(3)
+    print(f"Value of node 3: {node.value}")
+
+    # Check insert
+    print("\nInsert")
+    dLL.insert(2, 22)
+    print(f"Insert 22 in index 2")
+    print(dLL)
+    dLL.insert(4, 42)
+    print(f"Insert 42 in index 4")
+    print(dLL)
+
+    # Check set
+    print("\nSet")
+    print(f"Set 21 in index 0")
+    dLL.set(0, 21)
+    print(dLL)
+    print(f"Set 0 in index 5")
+    dLL.set(5, 0)
+    print(dLL)
+
+    # Check remove
+    print("\nRemove")
+    print(f"Remove index 4")
+    dLL.remove(4)
+    print(dLL)    
+    print(f"Remove index 2")
+    dLL.remove(2)
     print(dLL)
 
 
