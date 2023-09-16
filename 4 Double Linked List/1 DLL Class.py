@@ -187,8 +187,22 @@ class DoubleLinkedList:
         return True
 
     def reverse(self):
-        
-        pass
+        if self.length == 0:
+            return None
+
+        temp = self.tail
+        follow_node = self.tail.prev
+
+        self.head = self.tail
+
+        while follow_node != None:
+            temp.next = follow_node
+            temp = temp.next
+            follow_node = follow_node.prev
+
+        self.tail = temp
+
+        return True
 
     # Dunder methods ========
     def __str__(self):
@@ -275,5 +289,9 @@ if __name__ == "__main__":
     dLL.remove(2)
     print(dLL)
 
+    # Check reverse
+    print("\nReverse")
+    dLL.reverse()
+    print(dLL)
 
 # %%
