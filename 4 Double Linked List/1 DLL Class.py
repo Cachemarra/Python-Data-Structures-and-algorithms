@@ -91,7 +91,7 @@ class DoubleLinkedList:
         else:
             node = Node(value)
             
-            temp = self.get(index-1)
+            temp = self.get_value(index-1)
             follow_node = temp.next
             
             temp.next = node
@@ -138,7 +138,7 @@ class DoubleLinkedList:
         self.__update_len(self.DECREACE_LEN)
         return temp
     
-    def get(self, index:int):
+    def get_value(self, index:int):
         if index > self.length or index < 0:
             return False
         
@@ -148,7 +148,7 @@ class DoubleLinkedList:
 
         return temp
         
-    def set(self, index, value):
+    def set_value(self, index, value):
         # Normal method
         # if index > self.length or index < 0:
         #     return False
@@ -160,7 +160,7 @@ class DoubleLinkedList:
         # temp.value = value
 
         # Lazy mode
-        temp = self.get(index)
+        temp = self.get_value(index)
         temp.value = value
         return True
 
@@ -190,18 +190,24 @@ class DoubleLinkedList:
         if self.length == 0:
             return None
 
-        temp = self.tail
         follow_node = self.tail.prev
-
+        temp = self.tail
+        back_node = self.tail
+        temp.prev = None
+        
         self.head = self.tail
 
         while follow_node != None:
             temp.next = follow_node
+            temp.prev = back_node
+            
             temp = temp.next
+            back_node = temp
             follow_node = follow_node.prev
-
-        self.tail = temp
-
+            
+        temp.prev = temp.next
+        temp.next = None
+        self.tail = temp        
         return True
 
     # Dunder methods ========
@@ -236,6 +242,8 @@ if __name__ == "__main__":
     print("Append")
     print(dLL)
 
+    print(dLL.tail.prev.value)
+
     # Check prepend
     print("\nPrepend")
     dLL.prepend(1)
@@ -243,11 +251,15 @@ if __name__ == "__main__":
     dLL.prepend(11)
     print(dLL)
 
+    print(dLL.tail.prev.value)
+
     # Check pop
     print("\nPop")
     dLL.pop()
     dLL.pop()
     print(dLL)
+
+    print(dLL.tail.prev.value)
 
     # Check pop_first
     print("\nPop first")
@@ -255,12 +267,16 @@ if __name__ == "__main__":
     dLL.pop_first()
     print(dLL)
 
+    print(dLL.tail.prev.value)
+
     # Check get
     print("\nGet")
-    node = dLL.get(0)
+    node = dLL.get_value(0)
     print(f"Value of node 0: {node.value}")
-    node = dLL.get(3)
+    node = dLL.get_value(3)
     print(f"Value of node 3: {node.value}")
+
+    print(dLL.tail.prev.value)
 
     # Check insert
     print("\nInsert")
@@ -270,15 +286,19 @@ if __name__ == "__main__":
     dLL.insert(4, 42)
     print(f"Insert 42 in index 4")
     print(dLL)
+    
+    print(dLL.tail.prev.value)
 
     # Check set
     print("\nSet")
     print(f"Set 21 in index 0")
-    dLL.set(0, 21)
+    dLL.set_value(0, 21)
     print(dLL)
     print(f"Set 0 in index 5")
-    dLL.set(5, 0)
+    dLL.set_value(5, 0)
     print(dLL)
+
+    print(dLL.tail.prev.value)
 
     # Check remove
     print("\nRemove")
@@ -289,9 +309,13 @@ if __name__ == "__main__":
     dLL.remove(2)
     print(dLL)
 
+    print(dLL.tail.prev.value)
+
     # Check reverse
     print("\nReverse")
     dLL.reverse()
     print(dLL)
+
+    print(dLL.tail.prev.value)
 
 # %%
