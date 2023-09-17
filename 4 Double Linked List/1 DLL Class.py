@@ -130,11 +130,19 @@ class DoubleLinkedList:
             return None
         
         temp = self.head
-        new_head = temp.next
-        new_head.prev = None
-        self.head = new_head
+        
+        if self.length == 1:
+            self.head = None
+            self.tail = None
+            
+        else:
+            new_head = temp.next
+            new_head.prev = None
+            self.head = new_head
 
+        temp.next = None
         temp.prev = None
+        
         self.__update_len(self.DECREACE_LEN)
         return temp
     
@@ -186,6 +194,7 @@ class DoubleLinkedList:
         self.__update_len(self.DECREACE_LEN)
         return True
 
+    # Questions challenges 
     def reverse(self):
         if self.length == 0:
             return None
@@ -210,6 +219,47 @@ class DoubleLinkedList:
         self.tail = temp        
         return True
 
+    def swap_first_last(self):
+        if self.head == None:
+            return False
+        temp = self.tail.value
+        self.tail.value = self.head.value
+        self.head.value = temp
+        
+        return True
+    
+    def is_palindrome(self):
+        begin = self.head
+        end = self.tail
+        
+        while begin != None:
+            if end.value != begin.value:
+                return False
+            
+            begin = begin.next
+            end = end.prev
+            
+        return True
+
+    def swap_pairs(self):
+        if self.length % 2 != 0:
+            return False
+            
+        back = self.head
+        follow = self.head.next
+
+        while follow != None:
+            # swap pointers
+            back.prev, follow.prev = follow.prev, back.prev
+            back.next, follow.next = follow.next, back.next
+            
+            # Advance
+            back = back.next.next
+            follow = follow.next.next
+
+        return True
+
+    # End questions challenges
     # Dunder methods ========
     def __str__(self):
         text = "None"
@@ -263,8 +313,8 @@ if __name__ == "__main__":
 
     # Check pop_first
     print("\nPop first")
-    dLL.pop_first()
-    dLL.pop_first()
+    print(dLL.pop_first().value)
+    print(dLL.pop_first().value)
     print(dLL)
 
     print(dLL.tail.prev.value)
@@ -312,10 +362,12 @@ if __name__ == "__main__":
     print(dLL.tail.prev.value)
 
     # Check reverse
-    print("\nReverse")
-    dLL.reverse()
-    print(dLL)
+    # print("\nReverse")
+    # dLL.reverse()
+    # print(dLL)
 
-    print(dLL.tail.prev.value)
+    # print(dLL.tail.prev.value)
 
+# %%
+dLL.swap_pairs()
 # %%
