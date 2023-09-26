@@ -4,6 +4,9 @@ class Node():
         self.value = value
         self.next = None
 
+    def __str__(self):
+        return str(self.value)
+
 
 # %% Stack constructor
 class Stack:
@@ -33,9 +36,8 @@ class Stack:
         
 
     def pop(self):
-        
-        if self.height >= 1:
-            temp = self.top
+        temp = self.top
+        if self.height >= 1 and temp is not None:
             self.top = temp.next
             temp.next = None
 
@@ -76,8 +78,13 @@ print(my_stack)
 
 print("".center(30, "-"))
 
-print(f"Node value: {my_stack.pop().value}")
-print(f"Node value: {my_stack.pop().value}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
+print(f"Node value: {my_stack.pop()}")
 print("Final stack")
 print(my_stack)
 
