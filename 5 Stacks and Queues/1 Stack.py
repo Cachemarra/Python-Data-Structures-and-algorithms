@@ -61,6 +61,48 @@ class Stack:
     def __updateHeight__(self, value):
         self.height += value
 
+    def is_empty(self):
+        return len(self.stack_list) == 0
+
+
+def is_balanced_parentheses(string:str=None):
+    stack = Stack()
+    opening_brac = {")": "(", "]": "[", "}": "{"}
+
+    if len(string) == 0:
+        return True
+    
+    if string[0] in opening_brac.keys():
+        return False
+        
+    stack.push(string[0])    
+    
+    for i in string[1:]:
+        if i in opening_brac.values(): # ( [ {
+            stack.push(i)
+        else: # ) ] }
+            prev = stack.pop()
+            if prev != opening_brac[i]:
+                return False
+                
+    return True if stack.is_empty() else False
+
+
+def reverse_string(string):
+    stack = Stack()
+    result = ""
+    
+    if len(string) == 0:
+        return result
+
+    for i in string:
+        stack.push(i)
+
+    for _ in range(stack.size()):
+        result += stack.pop()
+
+    return result
+
 
 # %% Check
 
