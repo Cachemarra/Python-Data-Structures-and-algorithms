@@ -30,42 +30,88 @@ class Stack:
 
 
 
-## WRITE REVERSE_STRING FUNCTION HERE ###
-#                                       #
-#  This is a separate function that is  #
-#  not a method within the Stack class. #
-#  Indent all the way to the left.      #
-#                                       #
-#########################################
 
-def reverse_string(string):
-    stack = Stack()
-    result = ""
+##### WRITE SORT_STACK FUNCTION HERE #####
+#                                        #
+#  This is a separate function that is   #
+#  not a method within the Stack class.  #
+#                                        #
+#  <- INDENT ALL THE WAY TO THE LEFT <-  #
+#                                        #
+##########################################
+def sort_stack(input_stack):
+    sorted_stack = Stack()
+
+    if input_stack.is_empty():
+        return True
+
+    temp = input_stack.pop()
+
+    while not input_stack.is_empty():
+        if input_stack.peek() > temp:
+            sorted_stack.push(temp)
+            temp = input_stack.pop()
+
+        else:
+            val = input_stack.pop()
+            while not sorted_stack.is_empty() and val < sorted_stack.peek():
+                input_stack.push(sorted_stack.pop())
+            
+            sorted_stack.push(val)
+            val = None
+        
+    sorted_stack.push(temp)
     
-    if len(string) == 0:
-        return result
+    while not sorted_stack.is_empty():
+        input_stack.push(sorted_stack.pop())
 
-    for i in string:
-        stack.push(i)
+    # while not input_stack.is_empty():
+    #     temp = input_stack.pop()
+        
+    #     while not sorted_stack.is_empty() and sorted_stack.peek() > temp:
+    #         input_stack.push(sorted_stack.pop())
+    #         sorted_stack.push(temp)
 
-    for _ in range(stack.size()):
-        result += stack.pop()
+    # while not sorted_stack.is_empty():
+    #     input_stack.push(sorted_stack.pop())
 
-    return result
-    
 
-# %%
-my_string = 'hello'
 
-print ( reverse_string(my_string) )
+
+#%%
+my_stack = Stack()
+my_stack.push(3)
+my_stack.push(1)
+my_stack.push(5)
+my_stack.push(4)
+my_stack.push(2)
+
+print("Stack before sort_stack():")
+my_stack.print_stack()
+
+sort_stack(my_stack)
+
+print("\nStack after sort_stack:")
+my_stack.print_stack()
 
 
 
 """
     EXPECTED OUTPUT:
     ----------------
-    olleh
+    Stack before sort_stack():
+    2
+    4
+    5
+    1
+    3
+
+    Stack after sort_stack:
+    1
+    2
+    3
+    4
+    5
 
 """
-
 # %%
