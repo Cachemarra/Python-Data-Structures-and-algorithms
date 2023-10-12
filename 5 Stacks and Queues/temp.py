@@ -69,7 +69,6 @@ def sort_stack(input_stack):
     #     temp = input_stack.pop()
         
     #     while not sorted_stack.is_empty() and sorted_stack.peek() > temp:
-    #         input_stack.push(sorted_stack.pop())
     #         sorted_stack.push(temp)
 
     # while not sorted_stack.is_empty():
