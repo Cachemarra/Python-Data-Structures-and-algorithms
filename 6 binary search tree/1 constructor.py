@@ -18,31 +18,31 @@ class BinarySearchTree:
             self.root = new_node
 
         else:
-            self.compare_nodes(self.root, new_node)
+            self.__compare_nodes(self.root, new_node)
             
-    def compare_nodes(self, node, new_node):
+    def __compare_nodes(self, node, new_node):
         if node.left == None and new_node.value < node.value:
             node.left = new_node
-        elif node.right == None:
+        elif node.right == None and new_node.value > node.value:
                 node.right = new_node
             
         else:
             if new_node.value < node.value:
-                self.compare_nodes(node.left, new_node)
+                self.__compare_nodes(node.left, new_node)
             else:
-                self.compare_nodes(node.right, new_node)
+                self.__compare_nodes(node.right, new_node)
 
 
     def print_tree(self):
-        self.print_node(self.root)
+        self.__print_node(self.root)
 
-    def print_node(self, node):
+    def __print_node(self, node):
         if node != None:
             print(node.value)
         
             # Print left path and right
-            self.print_node(node.left)
-            self.print_node(node.right)
+            self.__print_node(node.left)
+            self.__print_node(node.right)
 
 
 
@@ -52,7 +52,7 @@ my_tree = BinarySearchTree()
 
 print(my_tree.root)
 
-values = [5, 1, 6, 2, 7, 3, 8, 4, 9]
+values = [47, 21, 18, 76, 82, 27, 52] # [5, 1, 6, 2, 7, 3, 8, 4, 9]
 
 for i in values:
     my_tree.add_node(i)
