@@ -11,26 +11,54 @@ class BinarySearchTree:
     def __init__(self):
         self.root = None
 
-    def add_node(self, value):
+    def insert(self, value):
         new_node = Node(value)
 
         if self.root == None:
             self.root = new_node
-
+            return True
         else:
-            self.__compare_nodes(self.root, new_node)
+            return self.__compare_nodes_to_add(self.root, new_node)
             
-    def __compare_nodes(self, node, new_node):
-        if node.left == None and new_node.value < node.value:
+    def __compare_nodes_to_add(self, node, new_node):
+        if node.value == new_node.value:
+            return False
+        elif node.left == None and new_node.value < node.value:
             node.left = new_node
+            return True
         elif node.right == None and new_node.value > node.value:
                 node.right = new_node
-            
+                return True
         else:
             if new_node.value < node.value:
-                self.__compare_nodes(node.left, new_node)
+                return self.__compare_nodes_to_add(node.left, new_node)
             else:
-                self.__compare_nodes(node.right, new_node)
+                return self.__compare_nodes_to_add(node.right, new_node)
+
+
+    def contains(self, value):
+        # Check if contains a value
+        node = self.root
+        
+        if node == None:
+            return False
+        
+        elif value == node.value:
+            return True
+        
+        return self.__compare_value(node, value)
+    
+    def __compare_value(self, node, value):
+        if node == None:
+            return False
+        
+        if node.value == value:
+            return True
+        
+        if value < node.value:
+            return self.__compare_value(node.left, value)
+        else:
+            return self.__compare_value(node.right, value)
 
 
     def print_tree(self):
@@ -58,6 +86,11 @@ for i in values:
     my_tree.add_node(i)
 
 my_tree.print_tree()
+
+print(f"Tree contains 47? : {my_tree.contains(47)}")
+print(f"Tree contains 1? : {my_tree.contains(1)}")
+print(f"Tree contains 27? : {my_tree.contains(27)}")
+print(f"Tree contains 92? : {my_tree.contains(92)}")
 
 
 # %%
