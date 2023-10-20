@@ -1,35 +1,16 @@
 # %% WRITE GROUP_ANAGRAMS FUNCTION HERE #
 def group_anagrams(strings):
-    list_of_lists = []
-    sub_list = []
-    new_hash = False
-    
-    
-    def create_hash(word):
-        # First word
-        hash = {}
-        
-        for char in word:
-            hash[char] = True
-        return hash
-    
-    hash = create_hash(strings[0])
-    
+    hash = {}
+
     for word in strings:
-        for char in strings:
-            
-            if char not in hash.keys():
-                new_hash = True
-                
-        if new_hash:
-            list_of_lists.append(sub_list)
-            sub_list = [word]
-            hash = create_hash(word)
+        sortedword = "".join(sorted(word))
+
+        if sortedword in hash:
+            hash[sortedword].append(word)
         else:
-            sub_list.append(word)
-            
-    return list_of_lists
-            
+            hash[sortedword] = [word]
+    return list(hash.values())
+
 
 # %% Tests
 print("1st set:")
@@ -56,3 +37,4 @@ print( group_anagrams(["listen", "silent", "triangle", "integral", "garden", "ra
     [['listen', 'silent'], ['triangle', 'integral'], ['garden', 'ranged']]
 
 """
+# %%
