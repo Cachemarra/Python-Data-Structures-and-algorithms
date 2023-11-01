@@ -36,6 +36,7 @@ class Graph:
             for item in self.adj_list[vertex]:
                 self.adj_list[item].remove(vertex)
             self.adj_list.pop(vertex)
+            # del self.adj_list[vertex]
             return True
         return False
 
