@@ -21,14 +21,60 @@ class MaxHeap:
         self.heap.append(value)
         current = len(self.heap) - 1
 
-        while True:
-            if self.heap[self._parent(current)] < value:
-                self._swap(current, self._parent(current))
-                current = self._parent(current)
-            if current == 0:
-                break
+        while current > 0 and self.heap[current] > self.heap[self._parent(current)]:
+            self._swap(current, self._parent(current))
+            current = self._parent(current)
         return True
             
+
+    def remove(self):
+        if len(self.heap) == 0:
+            return None
+        if len(self.heap) == 1:
+            return self.heap.pop()
+        
+        max_value = self.heap[0]
+        # Replace the head with the last value to keep the tree completed
+        self.heap[0] = self.heap.pop()
+        self._sink_down(0)
+
+        return max_value
+        
+
+    def _sink_down(self, index):
+        # Function to move a value to his true location.
+        while True:
+            if self.heap[index] < self.heap[self._left_child(index)]:
+                index_ = self._left_child(index)
+                self._swap(index, index_)
+                index = index_
+            
+            elif self.heap[index] 
+
+
+# %%
+
+myheap = MaxHeap()
+myheap.insert(99)
+myheap.insert(72)
+myheap.insert(61)
+myheap.insert(58)
+
+print(myheap.heap)
+
+# Insert new vale that must go on top
+myheap.insert(100)
+print(f"Updated heap:\n{myheap.heap}")
+
+# Add new value
+myheap.insert(75)
+print("Adding 75")
+print(myheap.heap)
+
+# Remove top
+print("Removing top (100)")
+myheap.remove()
+print(myheap.remove())
 
 
 # %%
