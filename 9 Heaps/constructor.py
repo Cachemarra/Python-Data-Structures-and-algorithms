@@ -42,14 +42,34 @@ class MaxHeap:
         
 
     def _sink_down(self, index):
-        # Function to move a value to his true location.
+        max_index = index
         while True:
-            if self.heap[index] < self.heap[self._left_child(index)]:
-                index_ = self._left_child(index)
-                self._swap(index, index_)
-                index = index_
+            left_index = self._left_child(index)
+            right_index = self._right_child(index)
+
+            if (left_index < len(self.heap)) and self.heap[left_index] > self.heap[max_index]:
+                max_index = left_index
+            if (right_index < len(self.heap)) and self.heap[right_index] > self.heap[max_index]:
+                max_index = right_index
+
+            if max_index != index:
+                self._swap(index, max_index)
+                index = max_index
+            else:
+                return
+        # Function to move a value to his true location.
+        # while True:
+        #     if self.heap[self._left_child(index)] is None or self.heap[self._right_child(index)] is None:
+        #         break
+        #     if self.heap[index] < self.heap[self._left_child(index)]:
+        #         index_ = self._left_child(index)
+        #         self._swap(index, index_)
+        #         index = index_
             
-            elif self.heap[index] 
+        #     if self.heap[index] < self.heap[self._right_child(index)]:
+        #         index_ = self._right_child(index)
+        #         self._swap(index, index_) 
+        #         index = index_
 
 
 # %%
@@ -71,10 +91,22 @@ myheap.insert(75)
 print("Adding 75")
 print(myheap.heap)
 
+print("\nNew Heap")
+myheap = MaxHeap()
+myheap.insert(95)
+myheap.insert(75)
+myheap.insert(80)
+myheap.insert(55)
+myheap.insert(60)
+myheap.insert(50)
+myheap.insert(65)
+print(myheap.heap)
+
 # Remove top
-print("Removing top (100)")
+print("Removing top (99)")
 myheap.remove()
-print(myheap.remove())
-
-
+print(myheap.heap)
+print("Removing (80)")
+myheap.remove()
+print(myheap.heap)
 # %%
