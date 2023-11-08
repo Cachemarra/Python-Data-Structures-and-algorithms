@@ -65,7 +65,7 @@ class MaxHeap:
 #    Indent all the way to the left.          #
 #                                             #
 ###############################################
-
+# %% Kth_smallest function
 def find_kth_smallest(nums, k):
     heap = MaxHeap()
     
@@ -79,7 +79,7 @@ def find_kth_smallest(nums, k):
     
     
 
-# %%
+# %% Find_kth_smallest
 # Test cases
 nums = [[3,2,1,5,6,4], [6,5,4,3,2,1], [1,2,3,4,5,6], [3,2,3,1,2,4,5,5,6]]
 ks = [2, 3, 4, 7]
@@ -122,6 +122,71 @@ for i in range(len(nums)):
     Expected output: 5
     Test passed: True
     ---------------------------------------
+
+"""
+
+# %% Stream_max
+def stream_max(nums):
+    max_list = []
+    heap = MaxHeap()
+
+    for num in nums:
+        heap.insert(num)        
+        max_list.append(heap.heap[0])
+
+    return max_list
+
+
+# %% stream_max
+test_cases = [
+    ([], []),
+    ([1], [1]),
+    ([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
+    ([1, 2, 2, 1, 3, 3, 3, 2, 2], [1, 2, 2, 2, 3, 3, 3, 3, 3]),
+    ([-1, -2, -3, -4, -5], [-1, -1, -1, -1, -1])
+]
+
+for i, (nums, expected) in enumerate(test_cases):
+    result = stream_max(nums)
+    print(f'\nTest {i+1}')
+    print(f'Input: {nums}')
+    print(f'Expected Output: {expected}')
+    print(f'Actual Output: {result}')
+    if result == expected:
+        print('Status: Passed')
+    else:
+        print('Status: Failed')
+
+
+
+"""
+    EXPECTED OUTPUT:
+    ----------------
+    Test 1
+    Input: []
+    Expected Output: []
+    Actual Output: []
+    Status: Passed
+    Test 2
+    Input: [1]
+    Expected Output: [1]
+    Actual Output: [1]
+    Status: Passed
+    Test 3
+    Input: [1, 2, 3, 4, 5]
+    Expected Output: [1, 2, 3, 4, 5]
+    Actual Output: [1, 2, 3, 4, 5]
+    Status: Passed
+    Test 4
+    Input: [1, 2, 2, 1, 3, 3, 3, 2, 2]
+    Expected Output: [1, 2, 2, 2, 3, 3, 3, 3, 3]
+    Actual Output: [1, 2, 2, 2, 3, 3, 3, 3, 3]
+    Status: Passed
+    Test 5
+    Input: [-1, -2, -3, -4, -5]
+    Expected Output: [-1, -1, -1, -1, -1]
+    Actual Output: [-1, -1, -1, -1, -1]
+    Status: Passed
 
 """
 
