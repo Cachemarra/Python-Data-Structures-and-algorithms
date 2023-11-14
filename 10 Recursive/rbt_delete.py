@@ -36,7 +36,34 @@ class BinarySearchTree:
     #                                  #
     #                                  #
     ####################################
-    def delete(self):
+    def __delete_node(self, node, value):
+        if node is None:
+            return None
+        
+        if node.value > value:
+            node.left = self.__delete_node(node.left, value)
+        if node.value < value:
+            node.right = self.__delete_node(node.right, value)
+
+        else:
+            if node.left != None and node.right != None:
+                # Move the min right value to the node and delete min node
+                node.value = self.min_value(node.right)
+                node.right = self.__delete_node(node.right, node.value)
+                return node
+
+            elif node.left != None:
+                return node.left
+            elif node.right != None:
+                return node.right
+            return None
+        return node
+
+
+
+    def delete_node(self, value):
+        return self.__delete_node(self.root, value)
+        
 
 
 
