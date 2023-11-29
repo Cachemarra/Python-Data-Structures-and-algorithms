@@ -35,7 +35,48 @@ class LinkedList:
     ###########################
     
 
+    def merge(self, list2):
 
+        l1_node = self.head
+        l2_node = list2.head
+        prev = None
+
+        if l2_node is None:
+            return
+        elif l1_node is not None and l1_node.value < l2_node.value:
+            prev = self.head
+            l1_node = l1_node.next
+        else:
+            prev = list2.head
+            l2_node = l2_node.next
+
+        while l1_node is not None and l2_node is not None:
+            if l1_node.value < l2_node.value:
+                prev.next = Node(l1_node.value)
+
+                l1_node = l1_node.next
+                prev = prev.next
+            else:
+                prev.next = Node(l2_node.value)
+
+                l2_node = l2_node.next
+                prev = prev.next
+
+        while l1_node != None:
+            prev.next = Node(l1_node.value)
+            
+            l1_node = l1_node.next
+            prev = prev.next
+
+        while l2_node != None:
+            prev.next = Node(l2_node.value)
+            
+            prev = prev.next
+            l2_node = l2_node.next
+
+
+
+# Testing ===================
 l1 = LinkedList(1)
 l1.append(3)
 l1.append(5)
