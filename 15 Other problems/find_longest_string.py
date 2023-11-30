@@ -5,6 +5,9 @@
 #                                         #
 ###########################################
 def find_longest_string(string_list):
+    if len(string_list) == 0:
+        return ""
+        
     largest_string = string_list[0]
     longest_string = len(string_list[0])
 
@@ -13,7 +16,8 @@ def find_longest_string(string_list):
             longest_string = len(string)
             largest_string = string
 
-    return largest_string
+    return largest_string    
+
 
 
 
