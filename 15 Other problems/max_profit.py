@@ -17,9 +17,6 @@ def max_profit(stock):
     return max_profit
             
 
-    
-
-
 prices = [7, 1, 5, 3, 6, 4]
 profit = max_profit(prices)
 print("Test with mixed prices:")
